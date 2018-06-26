@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="sources/styles/main-style.css" rel="stylesheet" type="text/css">
+    <link href="sources/styles/create-character-page.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="create-character-page_header">
+        <div class="create-character-page-header_text">Create</div>
+    </div>
+    <div class="create-character-page_main-wrapper">
+        <div class="create-character-page_view-wrapper">
+            <canvas id="create-character_view-character"></canvas>
+        </div>
+        <div class="create-character-page_character-data" id="create-character-page_character-data">
+            <div>
+                <span>Head</span>
+                <ul class="character-data_list">
+                    <li class="character-data_item character-data-list_head-0 character-data_item_selected"></li>
+                    <li class="character-data_item character-data-list_head-1"></li>
+                    <li class="character-data_item character-data-list_head-2"></li>
+                </ul>
+            </div>
+            <div>
+                <span>Body</span>
+                <ul class="character-data_list">
+                    <li class="character-data_item character-data-list_body-0 character-data_item_selected"></li>
+                    <li class="character-data_item character-data-list_body-1"></li>
+                    <li class="character-data_item character-data-list_body-2"></li>
+                </ul>
+            </div>
+            <div>
+                <span>Hands</span>
+                <ul class="character-data_list">
+                    <li class="character-data_item character-data-list_hands-0 character-data_item_selected"></li>
+                    <li class="character-data_item character-data-list_hands-1"></li>
+                    <li class="character-data_item character-data-list_hands-2"></li>
+                </ul>
+            </div>
+            <div>
+                <span>Legs</span>
+                <ul class="character-data_list">
+                    <li class="character-data_item character-data-list_legs-0 character-data_item_selected"></li>
+                    <li class="character-data_item character-data-list_legs-1"></li>
+                    <li class="character-data_item character-data-list_legs-2"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="create-character-page_form-wrapper">
+        <form class="create-page_form">
+            <input class="form_input" type="text" name="name-of-character" id="name-of-character" placeholder="Character name" required>
+            <button class="form_button" type="submit" id="create-character-button">Create</button>
+        </form>
+    </div>
+
+
+<script src="sources/script/data.js"></script>
+<script src="sources/script/resources.js"></script>
+<script src="sources/script/sprite.js"></script>
+<script src="sources/script/create-character.js"></script>
+</body>
+</html>

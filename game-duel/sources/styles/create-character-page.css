@@ -1,0 +1,209 @@
+body
+{
+    padding: 20px 6%;
+    height: calc(100vh - 40px);
+    color: #f2f5fa;
+    background: #232E36 radial-gradient(circle at center, #344A58 49%, #1F2529 100%);
+}
+
+.create-page_form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-character-page_header
+{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.create-character-page-header_text
+{
+    font-size: 36px;
+}
+
+.create-character-page_main-wrapper
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.create-character-page_view-wrapper
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.create-character-page_character-data
+{
+    width: 254px;
+}
+
+.create-character-page_form-wrapper
+{
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.character-data_list
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6px 0 10px;
+}
+
+.create-character-page_character-data div:last-child .character-data_list
+{
+    margin-bottom: 0;
+}
+
+.form_input, .form_button
+{
+    width: 200px;
+    height: 40px;
+    outline: none;
+}
+
+.form_input:focus
+{
+    width: 198px;
+    height: 38px;
+    border: 1px solid #ffbc39;
+}
+
+.form_input
+{
+    margin-bottom: 10px;
+    background: #202b31;
+    border: none;
+    border-radius: 5px;
+    color: #f2f5fa;
+    text-align: center;
+    font-size: 16px;
+}
+
+.form_input::-webkit-input-placeholder
+{
+    color: #62676b;
+}
+
+.form_button
+{
+    background: #344A58;
+    border: 2px solid #ffbc39;
+    border-radius: 5px;
+    color: #ffbc39;
+    font-size: 16px;
+}
+
+.character-data_item
+{
+    list-style: none;
+    margin-right: 14px;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #898c91;
+    border-radius: 5px;
+    background: no-repeat center;
+    background-size: 90%, 100%;
+}
+
+.character-data_item_selected
+{
+    border: 2px solid #f2f5fa;
+}
+
+.character-data_item:last-child
+{
+    margin-right: 0;
+}
+
+.character-data-list_head-0
+{
+    background-image: url("../images/heroes-part/head-dog.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+
+}
+
+.character-data-list_head-1
+{
+    background-image: url("../images/heroes-part/head-panda.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+}
+
+.character-data-list_head-2
+{
+    background-image: url("../images/heroes-part/head-cat.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+}
+
+.character-data-list_body-0
+{
+    background-image: url("../images/heroes-part/body-dog.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+}
+
+.character-data-list_body-1
+{
+    background-image: url("../images/heroes-part/body-panda.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+}
+
+.character-data-list_body-2
+{
+    background-image: url("../images/heroes-part/body-cat.png"), radial-gradient(#4e7082 30%, #344A58 80%);
+}
+
+.character-data-list_hands-0
+{
+    background: url("../images/heroes-part/hand1-dog.png") no-repeat left,
+                url("../images/heroes-part/hand2-dog.png") no-repeat right,
+                radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 35%, 100%;
+}
+
+.character-data-list_hands-1
+{
+    background: url("../images/heroes-part/hand1-panda.png") no-repeat left,
+                url("../images/heroes-part/hand2-panda.png") no-repeat right,
+                radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 35%, 100%;
+}
+
+.character-data-list_hands-2
+{
+    background: url("../images/heroes-part/hand1-cat.png") no-repeat left,
+                url("../images/heroes-part/hand2-cat.png") no-repeat right,
+    radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 35%, 100%;
+}
+
+.character-data-list_legs-0
+{
+    background: url("../images/heroes-part/leg1-dog.png") no-repeat 25%,
+                url("../images/heroes-part/leg2-dog.png") no-repeat 75%,
+    radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 30%, 100%;
+}
+
+.character-data-list_legs-1
+{
+    background: url("../images/heroes-part/leg1-panda.png") no-repeat 25%,
+                url("../images/heroes-part/leg2-panda.png") no-repeat 75%,
+    radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 30%, 100%;
+}
+
+.character-data-list_legs-2
+{
+    background: url("../images/heroes-part/leg1-cat.png") no-repeat 25%,
+                url("../images/heroes-part/leg2-cat.png") no-repeat 75%,
+    radial-gradient(#4e7082 30%, #344A58 80%);
+    background-size: 35%, 30%, 100%;
+}
