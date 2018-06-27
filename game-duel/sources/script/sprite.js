@@ -30,13 +30,13 @@ class spellSprite{
         this.direction = dir;
         this.endPosition = end;
     }
-    draw(ctx, posX, posY){
+    draw(ctx, posDX, posDY, posSX, posSY){
         ctx.drawImage(resources.get(this.url),
-            this.positionInSourceX,
-            this.positionInSourceY,
+            posSX || this.positionInSourceX,
+            posSY || this.positionInSourceY,
             this.size[0], this.size[1],
-            posX || this.positionInDestinationX,
-            posY || this.positionInDestinationY,
-            this.size[0], this.size[1])
+            posDX || this.positionInDestinationX,
+            posDY || this.positionInDestinationY,
+            this.size[0]*2, this.size[1]*2)
     }
 }

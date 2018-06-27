@@ -8,8 +8,7 @@ function init() {
     data.canvasFight.width = document.querySelector("body").clientWidth - 10;
     data.canvasFight.height = document.querySelector("body").clientHeight - 10;
     data.ctx = data.canvasFight.getContext("2d");
-    data.ctx.fillStyle = "#4e7082";
-    data.ctx.fillRect(0, 0, data.canvasFight.width, data.canvasFight.height);
+    data.ctx.drawImage(resources.get("sources/images/game-bg.png"),0, 0, 500, 500);
 
     data.spellsList = {};
     data.spellsList.monster = [
@@ -24,6 +23,18 @@ function init() {
         new spellSprite(0,100, [43, 38], data.canvasFight.width* 0.25, data.canvasFight.height * 0.7, "sources/images/spells-sprite.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 200),
         new spellSprite(0, 138, [44, 38], data.canvasFight.width - data.canvasFight.width * 0.1 - 100, 0, "sources/images/spells-sprite.png", "col", data.canvasFight.height * 0.55)
     ];
+    data.fireBall = new spellSprite(512, 0, [512, 512], data.canvasFight.width* 0.25 - 250, data.canvasFight.height * 0.7 - 200, "sources/images/spell/fire-ball.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 600);
+    data.fireBallDistance = (data.fireBall.endPosition - data.fireBall.positionInDestinationX)/22;
+
+    data.lightning = new spellSprite(0, 0, [34, 512], data.canvasFight.width - data.canvasFight.width * 0.1 - 100, 0, "sources/images/spell/lighting.png");
+    data.energyRain = new spellSprite(0, 0, [114, 262], data.canvasFight.width - data.canvasFight.width * 0.1 - 200, -50, "sources/images/spell/energy-rain.png");
+
+    data.shuriken = new spellSprite(0, 0, [255, 255], data.canvasFight.width* 0.2, data.canvasFight.height * 0.7 - 150, "sources/images/spell/shuriken.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 250);
+    data.shurikenDistance = (data.shuriken.endPosition - data.shuriken.positionInDestinationX)/60;
+
+    // "sources/images/spell/energy-rain.png"
+    // "sources/images/spell/shuriken.png"
+    // "sources/images/spell/lightning.png"
 
     data.taskList= [createTask1, createTask2, createTask3, createTask4];
     data.timeCharacter = Date.now();
@@ -58,13 +69,21 @@ function main() {
         let gradient = data.ctx.createRadialGradient(data.canvasFight.width/2, data.canvasFight.height/2, data.canvasFight.width/1.5, data.canvasFight.width/2 , data.canvasFight.height /2, data.canvasFight.width/6);
         gradient.addColorStop(0, '#1F2529');
         gradient.addColorStop(1, '#4e7082');
-        data.ctx.fillStyle = gradient;
-        data.ctx.fillRect(0, 0, data.canvasFight.width, data.canvasFight.height);
+        data.ctx.drawImage(resources.get("sources/images/game-bg.png"),0, 0, 4096, 1780, 0, 0,data.canvasFight.width, data.canvasFight.height);
+
+
 
         renderCharacter();
         renderFon();
+
+        // fireBall(data.ctx);
+
         if(data.isAnimate){
-            animateSpell(data.ctx, castSpell, data.nowStep, data.spellCount);
+            // animateSpell(data.ctx, castSpell, data.nowStep, data.spellCount);
+            // fireBall(data.ctx, castSpell);
+            // lighting(data.ctx, castSpell);
+            // shuriken(data.ctx, castSpell);
+            energyRain(data.ctx, castSpell);
         }
 
         data.firstRender = false;

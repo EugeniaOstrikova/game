@@ -50,7 +50,12 @@ const data = {
         "sources/images/heroes-sprite.png",
         "sources/images/monster-sprite.png",
         "sources/images/pentagon.png",
-        "sources/images/spells-sprite.png"],
+        "sources/images/spells-sprite.png",
+        "sources/images/game-bg.png",
+        "sources/images/spell/fire-ball.png",
+        "sources/images/spell/lighting.png",
+        "sources/images/spell/shuriken.png",
+        "sources/images/spell/energy-rain.png"],
     monster: [
         [0, 932, [77, 81], 'leg2', 66/2, 395/2, "sources/images/monster-sprite.png"],
         [0, 787, [89, 145], 'hand2', 18/2, 226/2, "sources/images/monster-sprite.png"],
@@ -58,5 +63,16 @@ const data = {
         [0, 432, [100, 136], 'leg1', 130/2, 370/2, "sources/images/monster-sprite.png"],
         [0, 242, [101, 190], 'hand1', 192/2, 227/2, "sources/images/monster-sprite.png"],
         [0, 0, [291, 242], 'head', 0, 0, "sources/images/monster-sprite.png"]
-    ]
+    ],
+    fireBallPos: [0,0],
+    fireBallCount: 0,
+    fireBallCadr: 0,
+    lightningCount: 0,
+    lightningCadr: 0,
+    shurikenCount: 0,
+    shurikenCadr: 0,
+    shurikenPos: 0,
+    energyRainCount: 0,
+    energyRainCadr: 0,
+    energyRainPos: [0, 0]
 };
