@@ -9,7 +9,13 @@ function init() {
     data.canvasFight.height = document.querySelector("body").clientHeight - 10;
     data.ctx = data.canvasFight.getContext("2d");
 
+    data.isMassage = true;
     createSpellSprite();
+
+    data.lifeLine.character.posDestinationX = data.canvasFight.width * 0.01 + data.lifeLine.character.marginBack;
+    data.lifeLine.character.posDestinationY = data.canvasFight.height * 0.01 + data.lifeLine.character.marginTop;
+    data.lifeLine.monster.posDestinationX = data.canvasFight.width - (data.canvasFight.width * 0.01) - data.lifeLine.monster.marginBack - data.lifeLine.monster.border*2;
+    data.lifeLine.monster.posDestinationY = data.canvasFight.height * 0.01 + data.lifeLine.monster.marginTop;
 
     data.taskList= [createTask1, createTask2, createTask3, createTask4];
     data.timeCharacter = Date.now();
@@ -47,6 +53,9 @@ function main() {
         renderCharacter();
         renderFon();
 
+        if(data.isMassage){
+            showMessage(data.massage, data.ctx)
+        }
         if(data.isAnimate){
             animateSpell(data.spellNumber, data.ctx, castSpell, data.nowStep);
         }
@@ -86,21 +95,21 @@ function stopGame() {
 
 function renderCharacter() {
     if(14*(Date.now()- data.timeCharacter)/1000 >1){
-        if(data.pos < data.arr.length){
-            render(data.characterPart, data.arr[data.pos]);
-            render(data.monsterPart, data.arr[data.pos]);
-            data.pos++;
+        if(data.posInPersonAnimList < data.personAnimList.length){
+            render(data.characterPart, data.personAnimList[data.posInPersonAnimList]);
+            render(data.monsterPart, data.personAnimList[data.posInPersonAnimList]);
+            data.posInPersonAnimList++;
         }
         else{
-            render(data.characterPart, data.arr[data.pos]);
-            render(data.monsterPart, data.arr[data.pos]);
-            data.pos = 0;
+            render(data.characterPart, data.personAnimList[data.posInPersonAnimList]);
+            render(data.monsterPart, data.personAnimList[data.posInPersonAnimList]);
+            data.posInPersonAnimList = 0;
         }
         data.timeCharacter = Date.now();
     }
     else {
-        render(data.characterPart, data.arr[data.pos]);
-        render(data.monsterPart, data.arr[data.pos]);
+        render(data.characterPart, data.personAnimList[data.posInPersonAnimList]);
+        render(data.monsterPart, data.personAnimList[data.posInPersonAnimList]);
     }
 }
 
@@ -110,8 +119,12 @@ function render(arr, path) {
 
 function renderFon() {
     let dataSave = JSON.parse(localStorage.getItem("person"));
-    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 0, 0, 440, 419, data.canvasFight.width * 0.01, data.canvasFight.height * 0.01, 440/3, 419/3);
-    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 450, 0, 440, 419, data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3, data.canvasFight.height * 0.01, 440/3, 419/3);
+
+    renderLifeLine(data.lifeLine.character, 0, 0);
+    renderLifeLine(data.lifeLine.monster,data.lifeLine.monster.width * data.lifeLine.monster.life , data.lifeLine.monster.width);
+
+    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 0, 0, 447, 425, data.canvasFight.width * 0.01, data.canvasFight.height * 0.01, 440/3, 419/3);
+    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 470, 0, 447, 425, data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3, data.canvasFight.height * 0.01, 440/3, 419/3);
     data.ctx.drawImage(resources.get("sources/images/heroes-sprite.png"), dataSave.character[5][0], 0, 227, 224, data.canvasFight.width * 0.01 + 440/6 - 227/6, data.canvasFight.height * 0.01 + 419/6 - 224/6, 227/3, 224/3);
     data.ctx.drawImage(resources.get("sources/images/monster-sprite.png"), data.monster[5][0], 0, 291, 242, (data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3) + 440/6 - 291/6, data.canvasFight.height * 0.01 + 419/6 - 242/6, 291/3, 242/3);
     data.ctx.font = "bold 32px serif";
@@ -131,10 +144,19 @@ function renderFon() {
     data.ctx.textAlign = "left";
 }
 
-function alertMessage(message, ctx) {
+function renderLifeLine(line, marginLine, margin){
+    data.ctx.fillStyle = line.borderColor;
+    data.ctx.fillRect(line.posDestinationX - margin, line.posDestinationY, line.width + line.border *2, line.height + line.border *2);
+    data.ctx.fillStyle = line.backgroundColor;
+    data.ctx.fillRect(line.posDestinationX + line.border -margin, line.posDestinationY + line.border, line.width, line.height);
+    data.ctx.fillStyle = line.lineColor;
+    data.ctx.fillRect(line.posDestinationX + line.border - marginLine, line.posDestinationY + line.border, line.width * line.life, line.height);
+}
+
+function showMessage(message, ctx) {
     ctx.font = "bold 32px serif";
     ctx.fillStyle = "#f2f5fa";
-    ctx.fillText(message, data.canvasFight.width * 0.5, data.canvasFight.height * 0.5);
+    ctx.fillText(message, data.canvasFight.width * 0.5 - 100, data.canvasFight.height * 0.3, 200);
 }
 
 function createNewGame() {
@@ -142,6 +164,8 @@ function createNewGame() {
     data.characterHealth = 1000;
     data.monsterHealth = 1000;
     data.isGamePlay = true;
+    data.lifeLine.monster.life = 1;
+    data.lifeLine.character.life = 1;
     let buttonNewGame = document.querySelector("#new-game-button");
     buttonNewGame.classList.add("hidden");
     main();

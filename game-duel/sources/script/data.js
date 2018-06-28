@@ -1,23 +1,49 @@
 const data = {
     canvasCreateCharacter: document.querySelector("#create-character_view-character"),
     canvasFight: document.querySelector("#fight-view"),
-
     isGamePlay: true,
     isAnimate: false,
-    arr: [0, 0.5, 1, 1.5, 2, 2.5, 2.5, 2, 1.5, 1, 0.5, 0],
-    pos: 0,
+    isMassage: false,
+    massage: "Your move",
+    personAnimList: [0, 0.5, 1, 1.5, 2, 2.5, 2.5, 2, 1.5, 1, 0.5, 0],
+    posInPersonAnimList: 0,
     characterHealth: 1000,
     monsterHealth: 1000,
+    maxHealth: 1000,
     nowStep: "character",
-
-    tasks:{},
-    animationCount: 0,
     spellNumber: 0,
-    spellsNameList: ["lighting", "energyRain", "fireBall", "throwingStar"],
     answer: 0,
+    lifeLine: {
+        monster:{
+            posDestinationX: 0,
+            posDestinationY: 0,
+            width: 200,
+            border: 4,
+            height: 20,
+            life: 1,
+            marginBack: 440/3,
+            marginTop: 100,
+            borderColor: "#4f1e11",
+            backgroundColor: "#702814",
+            lineColor: "#a43315"
+        },
+        character: {
+            posDestinationX: 0,
+            posDestinationY: 0,
+            width: 200,
+            border: 4,
+            height: 20,
+            life: 1,
+            marginBack: 440/3,
+            marginTop: 100,
+            borderColor: "#00393c",
+            backgroundColor: "#007379",
+            lineColor: "#20b2bb"
 
+        }
+    },
+    spellsNameList: ["lighting", "energyRain", "fireBall", "throwingStar"],
     monsterName: [["Hungry", "Evil", "Harmful", "Sad", "Alone"],["Dragon", "Monster", "Bird"]],
-
     mathSigns: ["+", "-", "*", "/"],
     worldsList: [
         {world: "yellow",
@@ -35,7 +61,6 @@ const data = {
         {world: "orange",
             translate: ["оранжевый", "серый", "красный", "зеленый"],
             trueTranslate: 0}],
-
     spellsList: {
         fireBall: {
             posSourceXInAnim: 512,
@@ -88,7 +113,6 @@ const data = {
             dataSprite: [0, 0, [255, 255], [255, 255], 0, 0, "sources/images/spell/throwingStar.png", "row"]
         }
     },
-
     monster: [
         [0, 932, [77, 81], 'leg2', 66/2, 395/2, "sources/images/monster-sprite.png"],
         [0, 787, [89, 145], 'hand2', 18/2, 226/2, "sources/images/monster-sprite.png"],

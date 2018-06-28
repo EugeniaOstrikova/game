@@ -1,12 +1,10 @@
 function animateSpell(spell, ctx, func, person) {
-    // debugger
     if(spell < 2){
         if(person === "character"){
-            console.log(data.spellsList[data.spellsNameList[spell]]);
             castStaticSpell(data.spellsList[data.spellsNameList[spell]], ctx, func, null)
         }
         else {
-            castStaticSpell(data.spellsList[data.spellsNameList[spell]], ctx, func, data.canvasFight.width* 0.25 - 50 - data.spellsList[data.spellsNameList[spell]].sprite.sizeInSource[0])
+            castStaticSpell(data.spellsList[data.spellsNameList[spell]], ctx, func, data.canvasFight.width* 0.25 - data.spellsList[data.spellsNameList[spell]].sprite.sizeInSource[0] *2)
         }
     }
     else if(spell == 2){

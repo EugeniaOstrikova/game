@@ -1,4 +1,5 @@
 function startStep() {
+    data.isMassage = false;
     if(data.nowStep === "character"){
         let castSpellList = document.querySelector("#cast-spell-view");
         castSpellList.classList.remove("hidden");
@@ -21,18 +22,19 @@ function selectSpellAnimation(e) {
 
 function castSpell() {
     if(data.nowStep === "monster"){
-        data.characterHealth = castSpellMath(data.characterHealth);
+        data.characterHealth = castSpellMath(data.characterHealth, "character");
     }
     else if(data.nowStep === "character"){
-        data.monsterHealth = castSpellMath(data.monsterHealth);
+        data.monsterHealth = castSpellMath(data.monsterHealth, "monster");
     }
 }
 
-function castSpellMath(personHealth) {
+function castSpellMath(personHealth, person) {
     personHealth = personHealth - mathDamage();
-
+    data.lifeLine[person].life = personHealth / data.maxHealth;
     if(personHealth <= 0){
         personHealth = 0;
+        data.lifeLine[person].life = 0;
         data.isGamePlay = false;
 
         if(data.nowStep === "character"){
@@ -45,17 +47,19 @@ function castSpellMath(personHealth) {
     else{
         if(data.nowStep === "monster"){
             data.nowStep = "character";
+            data.isMassage = true;
+            data.massage = "Your move";
             setTimeout(startStep, 2000);
         }
         else if(data.nowStep === "character"){
             data.nowStep = "monster";
+            data.isMassage = true;
+            data.massage = "Opponent's move";
             setTimeout(startStep, 2000);
         }
     }
     return personHealth;
 }
-
-
 
 function mathDamage() {
     let damage = Math.floor(Math.random() * 350);

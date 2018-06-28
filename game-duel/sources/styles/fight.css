@@ -142,6 +142,28 @@ body
     left: calc(50% - 100px);
 }
 
+.massage-true
+{
+    font-size: 20px;
+    width: 100px;
+    text-align: center;
+    position: absolute;
+    top: 60%;
+    left: calc(50% - 50px);
+    color: #5ea733;
+}
+
+.massage-false
+{
+    font-size: 20px;
+    text-align: center;
+    width: 200px;
+    position: absolute;
+    top: 60%;
+    left: calc(50% - 100px);
+    color: #ff643e;
+}
+
 .hidden
 {
     display: none;

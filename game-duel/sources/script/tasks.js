@@ -30,6 +30,8 @@ function castSpellButtonAnswer(e) {
         let taskView = document.querySelector("#task-view");
         taskView.classList.add("hidden");
         data.nowStep = "monster";
+        data.isMassage = true;
+        data.massage = "Opponent's move";
         setTimeout(startStep, 1000);
     }
 }
@@ -38,14 +40,29 @@ function castSpellButtonSubmit() {
     let personAnswer = document.querySelector("#answer");
     if(data.answer == personAnswer.value){
         let taskView = document.querySelector("#task-view");
-        taskView.classList.add("hidden");
-        data.isAnimate = true;
+        let massage = document.createElement("div");
+        massage.classList.add("massage-true");
+        massage.innerText = "Correctly!";
+        taskView.appendChild(massage);
+        setTimeout(function () {
+            taskView.classList.add("hidden");
+            data.isAnimate = true;
+        }, 1000)
     }
     else {
         let taskView = document.querySelector("#task-view");
-        taskView.classList.add("hidden");
-        data.nowStep = "monster";
-        setTimeout(startStep, 1000);
+        let massage = document.createElement("div");
+        massage.classList.add("massage-false");
+        massage.innerText = "Not true. Correct answer: " + data.answer;
+        taskView.appendChild(massage);
+        setTimeout(function () {
+            taskView.classList.add("hidden");
+            data.nowStep = "monster";
+            data.isMassage = true;
+            data.massage = "Opponent's move";
+            setTimeout(startStep, 1000);
+        }, 2000)
+
     }
 
 }
@@ -105,8 +122,6 @@ function createTask2(ctx) {
     let world = Math.floor(Math.random() * 5);
     taskWorld.innerText = data.worldsList[world].world;
     data.answer = data.worldsList[world].translate[data.worldsList[world].trueTranslate];
-    console.log( data.answer);
-    console.log( data.worldsList[world]);
     for(let i=0; i<4; i++){
         createButton(answerWrapper, data.worldsList[world].translate[i], "answer");
     }
