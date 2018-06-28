@@ -23,16 +23,28 @@ function createButton(ctx, content, type) {
 function castSpellButtonAnswer(e) {
     if(e.target.value == data.answer){
         let taskView = document.querySelector("#task-view");
-        taskView.classList.add("hidden");
-        data.isAnimate = true;
+        let massage = document.createElement("div");
+        massage.classList.add("massage-true");
+        massage.innerText = "Correctly!";
+        taskView.appendChild(massage);
+        setTimeout(function () {
+            taskView.classList.add("hidden");
+            data.isAnimate = true;
+        }, 1000)
     }
     else {
         let taskView = document.querySelector("#task-view");
-        taskView.classList.add("hidden");
-        data.nowStep = "monster";
-        data.isMassage = true;
-        data.massage = "Opponent's move";
-        setTimeout(startStep, 1000);
+        let massage = document.createElement("div");
+        massage.classList.add("massage-false");
+        massage.innerText = "Not true. Correct answer: " + data.answer;
+        taskView.appendChild(massage);
+        setTimeout(function () {
+            taskView.classList.add("hidden");
+            data.nowStep = "monster";
+            data.isMassage = true;
+            data.massage = "Opponent's move";
+            setTimeout(startStep, 1000);
+        }, 2000)
     }
 }
 
