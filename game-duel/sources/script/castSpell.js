@@ -5,14 +5,14 @@ function startStep() {
         castSpellList.addEventListener("click", selectSpellAnimation)
     }
     else {
-        data.spellCount = Math.floor(Math.random() * 4);
+        data.spellNumber = Math.floor(Math.random() * 2);
         data.isAnimate = true;
     }
 }
 
 function selectSpellAnimation(e) {
     if(e.target.classList.contains("spell")){
-        data.spellCount = e.target.id.substring(6);
+        data.spellNumber = e.target.id.substring(6);
         let castSpellList = document.querySelector("#cast-spell-view");
         castSpellList.classList.add("hidden");
         createTaskView();

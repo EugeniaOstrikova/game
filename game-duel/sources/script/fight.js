@@ -8,36 +8,12 @@ function init() {
     data.canvasFight.width = document.querySelector("body").clientWidth - 10;
     data.canvasFight.height = document.querySelector("body").clientHeight - 10;
     data.ctx = data.canvasFight.getContext("2d");
-    data.ctx.drawImage(resources.get("sources/images/game-bg.png"),0, 0, 500, 500);
 
-    data.spellsList = {};
-    data.spellsList.monster = [
-        new spellSprite(86, 0, [86, 50], data.canvasFight.width - data.canvasFight.width * 0.1 - 200,data.canvasFight.height * 0.7, "sources/images/spells-sprite.png", "row", data.canvasFight.width* 0.25),
-        new spellSprite(0, 50, [75, 50], data.canvasFight.width* 0.1 + 70, 0, "sources/images/spells-sprite.png", "col", data.canvasFight.height * 0.55),
-        new spellSprite(0,100, [43, 38], data.canvasFight.width - data.canvasFight.width * 0.1 - 200, data.canvasFight.height * 0.7, "sources/images/spells-sprite.png", "row", data.canvasFight.width* 0.25),
-        new spellSprite(0, 138, [44, 38], data.canvasFight.width* 0.1 + 70, 0, "sources/images/spells-sprite.png", "col", data.canvasFight.height * 0.55)
-    ];
-    data.spellsList.character = [
-        new spellSprite(0,0, [86, 50], data.canvasFight.width* 0.25, data.canvasFight.height * 0.7, "sources/images/spells-sprite.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 200),
-        new spellSprite(0, 50, [75, 50], data.canvasFight.width - data.canvasFight.width * 0.1 - 100, 0, "sources/images/spells-sprite.png", "col", data.canvasFight.height * 0.55),
-        new spellSprite(0,100, [43, 38], data.canvasFight.width* 0.25, data.canvasFight.height * 0.7, "sources/images/spells-sprite.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 200),
-        new spellSprite(0, 138, [44, 38], data.canvasFight.width - data.canvasFight.width * 0.1 - 100, 0, "sources/images/spells-sprite.png", "col", data.canvasFight.height * 0.55)
-    ];
-    data.fireBall = new spellSprite(512, 0, [512, 512], data.canvasFight.width* 0.25 - 250, data.canvasFight.height * 0.7 - 200, "sources/images/spell/fire-ball.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 600);
-    data.fireBallDistance = (data.fireBall.endPosition - data.fireBall.positionInDestinationX)/22;
-
-    data.lightning = new spellSprite(0, 0, [34, 512], data.canvasFight.width - data.canvasFight.width * 0.1 - 100, 0, "sources/images/spell/lighting.png");
-    data.energyRain = new spellSprite(0, 0, [114, 262], data.canvasFight.width - data.canvasFight.width * 0.1 - 200, -50, "sources/images/spell/energy-rain.png");
-
-    data.shuriken = new spellSprite(0, 0, [255, 255], data.canvasFight.width* 0.2, data.canvasFight.height * 0.7 - 150, "sources/images/spell/shuriken.png", "row", data.canvasFight.width - data.canvasFight.width * 0.1 - 250);
-    data.shurikenDistance = (data.shuriken.endPosition - data.shuriken.positionInDestinationX)/60;
-
-    // "sources/images/spell/energy-rain.png"
-    // "sources/images/spell/shuriken.png"
-    // "sources/images/spell/lightning.png"
+    createSpellSprite();
 
     data.taskList= [createTask1, createTask2, createTask3, createTask4];
     data.timeCharacter = Date.now();
+
     data.characterPart = [];
     let characterArray = JSON.parse(localStorage.getItem("person")).character;
     characterArray.forEach(item =>
@@ -58,32 +34,21 @@ function init() {
         let part = new CharacterSprite(item[0], item[1], item[2], item[3], item[4], item[5], item[6]);
         data.monsterPart.push(part);
         part.draw(data.ctx) });
+
     data.monsterAdjName = data.monsterName[0][Math.floor(Math.random() * 5)];
     main();
 }
 
 function main() {
-
     if(data.isGamePlay){
         data.ctx.clearRect(0, 0, data.canvasFight.width, data.canvasFight.height);
-        let gradient = data.ctx.createRadialGradient(data.canvasFight.width/2, data.canvasFight.height/2, data.canvasFight.width/1.5, data.canvasFight.width/2 , data.canvasFight.height /2, data.canvasFight.width/6);
-        gradient.addColorStop(0, '#1F2529');
-        gradient.addColorStop(1, '#4e7082');
         data.ctx.drawImage(resources.get("sources/images/game-bg.png"),0, 0, 4096, 1780, 0, 0,data.canvasFight.width, data.canvasFight.height);
-
-
 
         renderCharacter();
         renderFon();
 
-        // fireBall(data.ctx);
-
         if(data.isAnimate){
-            // animateSpell(data.ctx, castSpell, data.nowStep, data.spellCount);
-            // fireBall(data.ctx, castSpell);
-            // lighting(data.ctx, castSpell);
-            // shuriken(data.ctx, castSpell);
-            energyRain(data.ctx, castSpell);
+            animateSpell(data.spellNumber, data.ctx, castSpell, data.nowStep);
         }
 
         data.firstRender = false;
@@ -97,24 +62,19 @@ function main() {
 function stopGame() {
     if(!data.isGamePlay){
         data.ctx.clearRect(0, 0, data.canvasFight.width, data.canvasFight.height);
-        data.ctx.fillStyle = "#4e7082";
-        data.ctx.fillRect(0, 0, data.canvasFight.width, data.canvasFight.height);
+        data.ctx.drawImage(resources.get("sources/images/game-bg.png"),0, 0, 4096, 1780, 0, 0,data.canvasFight.width, data.canvasFight.height);
 
         renderCharacter();
         renderFon();
 
+        data.ctx.fillStyle = "rgba(242, 245, 250, 0.7)";
+        data.ctx.fillRect(0, data.canvasFight.height * 0.3, data.canvasFight.width, data.canvasFight.height * 0.4);
+        data.ctx.font = "54px serif";
+        data.ctx.fillStyle = "#232E36";
         if(data.youWin){
-            data.ctx.fillStyle = "rgba(242, 245, 250, 0.7)";
-            data.ctx.fillRect(0, data.canvasFight.height * 0.3, data.canvasFight.width, data.canvasFight.height * 0.4);
-            data.ctx.font = "54px serif";
-            data.ctx.fillStyle = "#4e7082";
             data.ctx.fillText("You win!", data.canvasFight.width * 0.5 - 100, data.canvasFight.height * 0.5);
         }
         else {
-            data.ctx.fillStyle = "rgba(242, 245, 250, 0.7)";
-            data.ctx.fillRect(0, data.canvasFight.height * 0.3, data.canvasFight.width, data.canvasFight.height * 0.4);
-            data.ctx.font = "54px serif";
-            data.ctx.fillStyle = "#4e7082";
             data.ctx.fillText("You Loss!", data.canvasFight.width * 0.5 - 100, data.canvasFight.height * 0.5);
         }
         let buttonNewGame = document.querySelector("#new-game-button");
@@ -149,25 +109,32 @@ function render(arr, path) {
 }
 
 function renderFon() {
-    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 0, 0, 440, 419, data.canvasFight.width * 0.01, data.canvasFight.height * 0.01, 440/3, 419/3);
-    data.ctx.font = "24px serif";
-    data.ctx.fillStyle = "#fff";
-    data.ctx.fillText(data.characterHealth + "/1000", data.canvasFight.width * 0.01  + 440/3, data.canvasFight.height * 0.01 + 70);
     let dataSave = JSON.parse(localStorage.getItem("person"));
-    data.ctx.font = "24px serif";
-    data.ctx.fillStyle = "#fff";
-    data.ctx.fillText(dataSave.name, data.canvasFight.width * 0.01  + 440/3, data.canvasFight.height * 0.01 + 40);
-    data.ctx.drawImage(resources.get("sources/images/heroes-sprite.png"), dataSave.character[5][0], 0, 227, 224, data.canvasFight.width * 0.01 + 440/6 - 227/6, data.canvasFight.height * 0.01 + 419/6 - 224/6, 227/3, 224/3);
+    data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 0, 0, 440, 419, data.canvasFight.width * 0.01, data.canvasFight.height * 0.01, 440/3, 419/3);
     data.ctx.drawImage(resources.get("sources/images/pentagon.png"), 450, 0, 440, 419, data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3, data.canvasFight.height * 0.01, 440/3, 419/3);
-    data.ctx.font = "24px serif";
-    data.ctx.fillStyle = "#fff";
-    data.ctx.fillText(data.monsterHealth + "/1000", data.canvasFight.width - data.canvasFight.width * 0.01  - 440/3 - 110, data.canvasFight.height * 0.01 + 70);
-    data.ctx.font = "24px serif";
-    data.ctx.fillStyle = "#fff";
+    data.ctx.drawImage(resources.get("sources/images/heroes-sprite.png"), dataSave.character[5][0], 0, 227, 224, data.canvasFight.width * 0.01 + 440/6 - 227/6, data.canvasFight.height * 0.01 + 419/6 - 224/6, 227/3, 224/3);
+    data.ctx.drawImage(resources.get("sources/images/monster-sprite.png"), data.monster[5][0], 0, 291, 242, (data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3) + 440/6 - 291/6, data.canvasFight.height * 0.01 + 419/6 - 242/6, 291/3, 242/3);
+    data.ctx.font = "bold 32px serif";
+    data.ctx.fillStyle = "#0e1a23";
+    data.ctx.fillText(data.characterHealth + "/1000", data.canvasFight.width * 0.01  + 440/3, data.canvasFight.height * 0.01 + 70);
+    data.ctx.fillText(dataSave.name, data.canvasFight.width * 0.01  + 440/3, data.canvasFight.height * 0.01 + 40);
     data.ctx.textAlign = "right";
+    data.ctx.fillText(data.monsterHealth + "/1000", data.canvasFight.width - data.canvasFight.width * 0.01  - 440/3, data.canvasFight.height * 0.01 + 70);
     data.ctx.fillText(data.monsterAdjName + " " + data.monsterName[1][data.monsterHeadName], data.canvasFight.width - data.canvasFight.width * 0.01  - 440/3 , data.canvasFight.height * 0.01 + 40);
     data.ctx.textAlign = "left";
-    data.ctx.drawImage(resources.get("sources/images/monster-sprite.png"), data.monster[5][0], 0, 291, 242, (data.canvasFight.width - (data.canvasFight.width * 0.01) - 440/3) + 440/6 - 291/6, data.canvasFight.height * 0.01 + 419/6 - 242/6, 291/3, 242/3);
+    data.ctx.fillStyle = "#f2f5fa";
+    data.ctx.fillText(data.characterHealth + "/1000", data.canvasFight.width * 0.01  + 440/3 +2, data.canvasFight.height * 0.01 + 70 +2);
+    data.ctx.fillText(dataSave.name, data.canvasFight.width * 0.01  + 440/3 +2, data.canvasFight.height * 0.01 + 40 +2);
+    data.ctx.textAlign = "right";
+    data.ctx.fillText(data.monsterHealth + "/1000", data.canvasFight.width - data.canvasFight.width * 0.01  - 440/3 +2, data.canvasFight.height * 0.01 + 70 +2);
+    data.ctx.fillText(data.monsterAdjName + " " + data.monsterName[1][data.monsterHeadName], data.canvasFight.width - data.canvasFight.width * 0.01  - 440/3 +2, data.canvasFight.height * 0.01 + 40 +2);
+    data.ctx.textAlign = "left";
+}
+
+function alertMessage(message, ctx) {
+    ctx.font = "bold 32px serif";
+    ctx.fillStyle = "#f2f5fa";
+    ctx.fillText(message, data.canvasFight.width * 0.5, data.canvasFight.height * 0.5);
 }
 
 function createNewGame() {

@@ -1,143 +1,126 @@
-function animateSpell(context, func, person, spell) {
-    let sprite = data.spellsList[person];
-    if(sprite[spell].direction === "col"){
-        if(data.animationCount < sprite[spell].endPosition){
-            sprite[spell].draw(context, null, data.animationCount);
-            data.animationCount+= 10;
+function animateSpell(spell, ctx, func, person) {
+    // debugger
+    if(spell < 2){
+        if(person === "character"){
+            console.log(data.spellsList[data.spellsNameList[spell]]);
+            castStaticSpell(data.spellsList[data.spellsNameList[spell]], ctx, func, null)
         }
-        else{
-            data.isAnimate = false;
-            data.animationCount = 0;
-            func()
+        else {
+            castStaticSpell(data.spellsList[data.spellsNameList[spell]], ctx, func, data.canvasFight.width* 0.25 - 50 - data.spellsList[data.spellsNameList[spell]].sprite.sizeInSource[0])
         }
     }
-    else if(sprite[spell].direction === "row" && person === "character"){
-        if(sprite[spell].positionInDestinationX + data.animationCount < sprite[spell].endPosition){
-            sprite[spell].draw(context, sprite[spell].positionInDestinationX + data.animationCount);
-            data.animationCount+= 10;
+    else if(spell == 2){
+        castFireBall(data.spellsList[data.spellsNameList[spell]], ctx, func)
+    }
+    else if(spell == 3){
+        castThrowingStar(data.spellsList[data.spellsNameList[spell]], ctx, func)
+    }
+
+}
+
+function castFireBall(spell, ctx, func) {
+    spell.sprite.draw(ctx, spell.sprite.positionInDestinationX + spell.posDestinationXChangeCount, null, spell.posSourceXInAnim, spell.posSourceYInAnim);
+    if(spell.countRepeatCycle < spell.maxCountRepeatCycle){
+        if(spell.posSourceXInAnim < spell.maxPosSourceXInAnim){
+            if(spell.posSourceYInAnim < spell.sprite.sizeInSource[1]){
+                if(spell.countRepeatFrame < spell.maxCountRepeatFrame){
+                    spell.countRepeatFrame++
+                }
+                else {
+                    spell.countRepeatFrame =0;
+                    spell.posSourceXInAnim += spell.sprite.sizeInSource[0]
+                }
+                spell.posDestinationXChangeCount += spell.distance
+            }
+            else {
+                spell.posSourceXInAnim += spell.sprite.sizeInSource[0]
+            }
         }
         else{
-            data.isAnimate = false;
-                data.animationCount = 0;
+            if(spell.posSourceYInAnim < spell.maxPosSourceYInAnim){
+                spell.posSourceXInAnim = 0;
+                spell.posSourceYInAnim += spell.sprite.sizeInSource[1]
+            }
+            else{
+                data.isAnimate = false;
+                spell.posDestinationXChangeCount = 0;
                 func()
+            }
         }
     }
-    else if(sprite[spell].direction === "row" && person === "monster"){
-        if(sprite[spell].positionInDestinationX - data.animationCount > sprite[spell].endPosition){
-            sprite[spell].draw(context, sprite[spell].positionInDestinationX - data.animationCount);
-            data.animationCount+= 10;
-        }
-        else{
-            data.isAnimate = false;
-            data.animationCount = 0;
-            func()
-        }
+
+    else{
+        data.isAnimate = false;
+        spell.posDestinationXChangeCount = 0;
+        func()
     }
 }
 
-function fireBall(ctx, func) {
-    data.fireBall.draw(ctx, data.fireBall.positionInDestinationX + data.fireBallCount, null, data.fireBallPos[0], data.fireBallPos[1]);
-    if(data.fireBallPos[0] < 512*8){
-        if(data.fireBallPos[1] < 512){
-            if(data.fireBallCadr < 3){
-                data.fireBallCadr +=1
-            }
-            else{
-                data.fireBallCadr =0;
-                data.fireBallPos[0] += 512;
-            }
-            data.fireBallCount += data.fireBallDistance;
+function castThrowingStar(spell, ctx, func) {
+    spell.sprite.draw(ctx, spell.sprite.positionInDestinationX + spell.posDestinationXChangeCount, null, spell.posSourceXInAnim);
+    if(spell.countRepeatCycle < spell.maxCountRepeatCycle){
+        if(spell.posSourceXInAnim < spell.maxPosSourceXInAnim){
+            spell.posSourceXInAnim += spell.sprite.sizeInSource[0];
+            spell.posDestinationXChangeCount += spell.distance
         }
         else {
-            data.fireBallPos[0] += 512;
-
+            spell.posSourceXInAnim = 0;
+            spell.countRepeatCycle ++
         }
     }
     else{
-        if(data.fireBallPos[1] < 512*8){
-            data.fireBallPos[0] = 0;
-            data.fireBallPos[1] += 512;
+        data.isAnimate = false;
+        spell.posSourceXInAnim = 0;
+        spell.countRepeatCycle =0;
+        spell.posDestinationXChangeCount =0;
+        func()
+    }
+}
+
+
+
+function castStaticSpell(spell, ctx, func, monsterPos) {
+    spell.sprite.draw(ctx, monsterPos, null, spell.posSourceXInAnim);
+    if(spell.countRepeatCycle < spell.maxCountRepeatCycle){
+        if(spell.posSourceXInAnim < spell.maxPosSourceXInAnim){
+            spell.posSourceXInAnim += spell.sprite.sizeInSource[0];
         }
         else {
-            data.isAnimate = false;
-            data.fireBallCount = 0;
-            func()
-        }
-    }
-}
-
-function lighting(ctx, func) {
-
-    if(data.lightningCadr < 5){
-        if(data.lightningCount < 512){
-            data.lightning.draw(ctx, null, null, data.lightningCount);
-            data.lightningCount += 140;
-        }
-        else{
-            data.lightning.draw(ctx, null, null, data.lightningCount);
-            data.lightningCount = 0;
-            data.lightningCadr ++;
-        }
-    }
-    else{
-        data.isAnimate = false;
-        data.lightningCount = 0;
-        data.lightningCadr = 0;
-        func()
-    }
-
-}
-
-function shuriken(ctx, func) {
-    if(data.shurikenCadr < 11){
-        if(data.shurikenPos < 1530){
-            data.shuriken.draw(ctx, data.shuriken.positionInDestinationX + data.shurikenCount, null, data.shurikenPos);
-            data.shurikenPos += 255;
-            data.shurikenCount += data.shurikenDistance
-
-        }
-        else{
-            data.shuriken.draw(ctx, data.shurikenCount, null, data.shurikenPos);
-            data.shurikenPos = 0;
-            data.shurikenCadr ++;
-        }
-    }
-    else{
-        data.isAnimate = false;
-        data.shurikenPos = 0;
-        data.shurikenCadr = 0;
-        data.shurikenCount = 0;
-        func()
-    }
-}
-
-function energyRain(ctx, func) {
-    if(data.energyRainCadr < 4){
-        if(data.energyRainPos[0]<912){
-            data.energyRain.draw(ctx, null, null, data.energyRainPos[0]);
-            data.energyRainPos[0] += 114;
-        }
-        else{
-            if(data.energyRainPos[1]<262){
-                data.energyRain.draw(ctx, null, null, data.energyRainPos[0]);
-                data.energyRainPos[0] =0 ;
-                data.energyRainPos[1] +=262 ;
+            if(spell.posSourceYInAnim < spell.maxPosSourceYInAnim){
+                spell.posSourceXInAnim = 0;
+                spell.posSourceYInAnim += spell.sprite.sizeInSource[1];
             }
             else{
-                data.energyRain.draw(ctx, null, null, data.energyRainPos[0]);
-                data.energyRainPos[0] =0 ;
-                data.energyRainPos[1] =0 ;
-                data.energyRainCadr ++
+                spell.posSourceXInAnim = 0;
+                spell.posSourceYInAnim = 0;
+                spell.countRepeatCycle ++
             }
         }
-
     }
     else{
         data.isAnimate = false;
-        data.energyRainPos[0] =0 ;
-        data.energyRainPos[1] =0 ;
-        data.energyRainCadr = 0;
+        spell.posSourceXInAnim = 0;
+        spell.posSourceYInAnim = 0;
+        spell.countRepeatCycle =0;
         func()
     }
-
 }
+
+// function castLighting(spell, ctx, func) {
+//     spell.sprite.draw(ctx, null, null, spell.posSourceXInAnim);
+//     if(spell.countRepeatCycle < spell.maxCountRepeatCycle){
+//         if(spell.posSourceXInAnim < spell.maxPosSourceXInAnim){
+//             spell.posSourceXInAnim += spell.sprite.sizeInSource[0]
+//         }
+//         else {
+//             spell.posSourceXInAnim = 0;
+//             spell.countRepeatCycle ++
+//         }
+//     }
+//     else{
+//         data.isAnimate = false;
+//         spell.posSourceXInAnim = 0;
+//         spell.countRepeatCycle =0;
+//         func()
+//     }
+// }

@@ -2,7 +2,7 @@ function createTaskView() {
     let taskView = document.querySelector("#task-view");
     taskView.innerHTML = "";
     taskView.classList.remove("hidden");
-    data.taskList[data.spellCount](taskView)
+    data.taskList[data.spellNumber](taskView)
 }
 
 function createButton(ctx, content, type) {

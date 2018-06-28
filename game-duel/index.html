@@ -3,63 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="sources/styles/main-style.css" rel="stylesheet" type="text/css">
-    <link href="sources/styles/create-character-page.css" rel="stylesheet" type="text/css">
+    <link href="sources/styles/landing.css" rel="stylesheet" type="text/css">
+    <link href="sources/styles/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="create-character-page_header">
-        <div class="create-character-page-header_text">Create</div>
-    </div>
-    <div class="create-character-page_main-wrapper">
-        <div class="create-character-page_view-wrapper">
-            <canvas id="create-character_view-character"></canvas>
-        </div>
-        <div class="create-character-page_character-data" id="create-character-page_character-data">
-            <div>
-                <span>Head</span>
-                <ul class="character-data_list">
-                    <li class="character-data_item character-data-list_head-0 character-data_item_selected"></li>
-                    <li class="character-data_item character-data-list_head-1"></li>
-                    <li class="character-data_item character-data-list_head-2"></li>
-                </ul>
+<header>
+        <img src="sources/images/logo.png" class="logo">
+        <h1>The game with magic!</h1>
+        <button class="header-block_button">Play</button>
+</header>
+<main>
+    <div class="about-block">
+        <div class="about-block_content">
+            <div class="about-block_text">
+                <h2>Fight!</h2>
+                <p>Choose your favorite spell and use it against the enemy</p>
             </div>
-            <div>
-                <span>Body</span>
-                <ul class="character-data_list">
-                    <li class="character-data_item character-data-list_body-0 character-data_item_selected"></li>
-                    <li class="character-data_item character-data-list_body-1"></li>
-                    <li class="character-data_item character-data-list_body-2"></li>
-                </ul>
-            </div>
-            <div>
-                <span>Hands</span>
-                <ul class="character-data_list">
-                    <li class="character-data_item character-data-list_hands-0 character-data_item_selected"></li>
-                    <li class="character-data_item character-data-list_hands-1"></li>
-                    <li class="character-data_item character-data-list_hands-2"></li>
-                </ul>
-            </div>
-            <div>
-                <span>Legs</span>
-                <ul class="character-data_list">
-                    <li class="character-data_item character-data-list_legs-0 character-data_item_selected"></li>
-                    <li class="character-data_item character-data-list_legs-1"></li>
-                    <li class="character-data_item character-data-list_legs-2"></li>
-                </ul>
+            <div class="about-block_text">
+                <h2>Learn and win!</h2>
+                <p>Pump your knowledge in mathematics and English and the opponent will not have a chance to win</p>
             </div>
         </div>
+        <div class="about-block_img">
+            <img src="sources/images/gamePlay-1.jpg">
+            <img src="sources/images/gamePlay-4.jpg">
+        </div>
     </div>
-    <div class="create-character-page_form-wrapper">
-        <form class="create-page_form">
-            <input class="form_input" type="text" name="name-of-character" id="name-of-character" placeholder="Character name" required>
-            <button class="form_button" type="submit" id="create-character-button">Create</button>
-        </form>
+</main>
+<footer>
+    <img src="sources/images/photo-face.jpg" class="footer-photo">
+    <p>Evgenia Ostrikova</p>
+    <p>The Rolling Scopes School</p>
+    <div class="footer-links">
+        <a href="https://vk.com/id69583652">
+            <i class="fab fa-github-square"></i>
+        </a>
+        <a href="https://telegram.me/e_ostrikova">
+            <i class="fa fa-telegram" aria-hidden="true"></i>
+        </a>
+        <a href="https://jobs.tut.by/resume/178c92a5ff03f58d600039ed1f7a7962356c79">
+            <i class="fa fa-id-badge" aria-hidden="true"></i>
+        </a>
     </div>
-
-
-<script src="sources/script/data.js"></script>
-<script src="sources/script/resources.js"></script>
-<script src="sources/script/sprite.js"></script>
-<script src="sources/script/create-character.js"></script>
+</footer>
 </body>
 </html>

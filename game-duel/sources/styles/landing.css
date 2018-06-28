@@ -1,0 +1,118 @@
+*
+{
+    padding: 0;
+    margin: 0;
+}
+
+@font-face {
+    font-family: ClashFont;
+    src: url("../fonts/ClashFont.ttf");
+}
+
+
+header
+{
+    color: #f2f5fa;
+    background: #232E36 radial-gradient(circle at center, #344A58 49%, #1F2529 100%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    font-family: ClashFont;
+}
+
+.logo
+{
+    margin: 50px 0;
+    width: 600px;
+}
+
+header h1
+{
+    margin-bottom: 50px;
+}
+
+.header-block_button
+{
+    background: #344A58;
+    border: 2px solid #ffbc39;
+    border-radius: 5px;
+    color: #ffbc39;
+    font-size: 16px;
+    width: 200px;
+    height: 40px;
+    outline: none;
+}
+
+.header-block_button:hover
+{
+    border: 2px solid #d59437;
+    color: #d59437;
+    cursor: pointer;
+}
+
+.about-block
+{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #f2f5fa;
+    font-family: Arial;
+}
+
+.about-block_content
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: inherit;
+    justify-content: center;
+    color: #344A58;
+}
+
+.about-block_text
+{
+    width: 50%;
+    margin-bottom: 50px;
+}
+
+.about-block_text h2
+{
+    margin-bottom: 20px;
+}
+
+.about-block_img
+{
+    width: 45%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-block_img img
+{
+    width: 500px;
+    margin-bottom: 50px;
+}
+
+footer
+{
+    height: 500px;
+    color: #f2f5fa;
+    background: #232E36 radial-gradient(circle at center, #344A58 49%, #1F2529 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-photo {
+    max-width: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
